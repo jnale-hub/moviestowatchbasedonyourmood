@@ -31,3 +31,46 @@ export interface VibeMapping {
   sortBy: string;
   minRating?: number;
 }
+
+
+export interface CastMember {
+  id: number;
+  name: string;
+  character: string;
+  profile_path: string | null;
+}
+
+export interface Video {
+  key: string;
+  site: string;
+  type: string;
+}
+
+export interface WatchProvider {
+  logo_path: string;
+  provider_id: number;
+  provider_name: string;
+}
+
+export interface WatchProvidersResponse {
+  results: {
+    [countryCode: string]: {
+      link: string;
+      flatrate?: WatchProvider[];
+      rent?: WatchProvider[];
+      buy?: WatchProvider[];
+    };
+  };
+}
+
+export interface MovieDetails extends Movie {
+  runtime: number;
+  overview: string;
+  videos: {
+    results: Video[];
+  };
+  credits: {
+    cast: CastMember[];
+  };
+  'watch/providers': WatchProvidersResponse; 
+}
