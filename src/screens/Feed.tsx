@@ -38,7 +38,7 @@ const AnimatedMovieCard = ({
   },);
 
   return (
-    <View className="w-[48%] md:w-[23%] mb-8">
+    <View className="w-[48%] md:w-[23%] mb-6">
       <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
         <Animated.View style={{ opacity: opacityAnim }}>
           <View className="w-full aspect-[2/3] rounded-2xl overflow-hidden bg-black/10 shadow-sm mb-2.5">
@@ -93,11 +93,11 @@ export const Feed = ({
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         <View className="w-full max-w-6xl mx-auto px-6" style={{ paddingTop: insets.top + 24, paddingBottom: 48 }}>
           
-          <TouchableOpacity onPress={onBack} className="mb-8 self-start">
+          <TouchableOpacity onPress={onBack} className="mb-6 self-start">
             <Text className={`font-sans text-sm lowercase tracking-wider opacity-60 ${theme.textColor}`}>← change vibe</Text>
           </TouchableOpacity>
           
-          <Text className={`font-serifItalic text-3xl md:text-5xl text-center mb-16 ${theme.textColor}`}>{theme.title}</Text>
+          <Text className={`font-serifItalic text-3xl md:text-5xl text-center mb-8 ${theme.textColor}`}>{theme.title}</Text>
 
           {isLoading && <ActivityIndicator size="small" color={theme.textColor} />}
           
