@@ -10,7 +10,7 @@ import { TrailerModal } from '../components/TrailerModal';
 import { MovieDetailSkeleton } from '../components/MovieDetailSkeleton';
 import { WhereToWatch } from '@/components/WhereToWatch';
 
-export const MovieDetail = ({ movieId, onBack }: { movieId: number; onBack: () => void }) => {
+export const MovieDetail = ({ movieId, onBack, onActorSelect }: { movieId: number; onBack: () => void; onActorSelect: (id: number) => void; }) => {
   const insets = useSafeAreaInsets();
   const [showTrailer, setShowTrailer] = useState(false);
   
@@ -111,7 +111,7 @@ export const MovieDetail = ({ movieId, onBack }: { movieId: number; onBack: () =
 
               <WhereToWatch providers={movie?.['watch/providers']} />
 
-              <CastGallery cast={movie?.credits?.cast || []} />
+              <CastGallery cast={movie?.credits?.cast || []} onActorSelect={onActorSelect} />
               
             </View>
           </View>
