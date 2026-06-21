@@ -110,3 +110,13 @@ export const fetchPersonDetails = async (personId: number) => {
   });
   return data;
 };
+
+export const searchTMDB = async (query: string) => {
+  if (!query) return [];
+  const { data } = await tmdb.get('/search/multi', {
+    params: { query }
+  });
+  return data.results
+    .filter((item: any) => item.media_type === 'movie' || item.media_type === 'person')
+    .slice(0, 5); 
+};
