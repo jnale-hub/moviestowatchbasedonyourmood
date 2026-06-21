@@ -101,3 +101,12 @@ export const fetchMovieDetails = async (movieId: number): Promise<MovieDetails> 
 
   return data;
 };
+
+export const fetchPersonDetails = async (personId: number) => {
+  const { data } = await tmdb.get(`/person/${personId}`, {
+    params: {
+      append_to_response: 'movie_credits', 
+    }
+  });
+  return data;
+};
