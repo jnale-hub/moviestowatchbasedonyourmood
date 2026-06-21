@@ -7,6 +7,7 @@ import './global.css';
 import { VibeCheck } from './src/screens/VibeCheck';
 import { Feed } from './src/screens/Feed';
 import { MovieDetail } from './src/screens/MovieDetail'; 
+import { CastDetail } from './src/screens/CastDetail';
 import { Vibe } from './src/types/movie.types';
 
 const queryClient = new QueryClient();
@@ -14,13 +15,28 @@ const queryClient = new QueryClient();
 export default function App() {
   const [currentVibe, setCurrentVibe] = useState<Vibe | null>(null);
   const [selectedMovieId, setSelectedMovieId] = useState<number | null>(null);
+  const [selectedCastId, setSelectedCastId] = useState<number | null>(null);
 
   const renderScreen = () => {
+    if (selectedCastId) {
+      return (
+        <CastDetail 
+          personId={selectedCastId} 
+          onBack={() => setSelectedCastId(null)}
+          onMovieSelect={(id) => {
+            setSelectedCastId(null); 
+            setSelectedMovieId(id);
+          }}
+        />
+      );
+    }
+
     if (selectedMovieId) {
       return (
         <MovieDetail 
           movieId={selectedMovieId} 
           onBack={() => setSelectedMovieId(null)} 
+          onActorSelect={(id) => setSelectedCastId(id)}
         />
       );
     }
@@ -35,11 +51,7 @@ export default function App() {
       );
     }
 
-    return (
-      <VibeCheck 
-        onSelectVibe={(vibe) => setCurrentVibe(vibe)} 
-      />
-    );
+    return <VibeCheck onSelectVibe={(vibe) => setCurrentVibe(vibe)} />;
   };
 
   return (
