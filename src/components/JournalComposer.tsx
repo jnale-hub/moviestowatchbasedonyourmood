@@ -13,7 +13,7 @@ export const JournalComposer = () => {
   
   // States
   const [text, setText] = useState('');
-  const [stage, setStage] = useState<WatchStage>(null); // Default to null (optional)
+  const [stage, setStage] = useState<WatchStage>(null); 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedContext, setSelectedContext] = useState<{ id: number; type: 'movie' | 'cast'; name: string } | null>(null);
 
@@ -34,11 +34,11 @@ export const JournalComposer = () => {
 
   const activeContext = composerContext || selectedContext;
 
-  const handlePost = () => {
+  const handlePost = async () => {
     if (text.trim().length === 0) return;
     
-    addEntry({
-      topicId: activeContext?.id, // Optional now
+    await addEntry({
+      topicId: activeContext?.id, 
       topicType: activeContext ? activeContext.type : 'general',
       topicName: activeContext ? activeContext.name : 'General Note',
       stage,
@@ -78,7 +78,6 @@ export const JournalComposer = () => {
               </View>
 
               <View className="flex-1">
-                
                 
                 <View className="mb-3 relative z-50">
                   {activeContext ? (
@@ -137,7 +136,6 @@ export const JournalComposer = () => {
                   )}
                 </View>
 
-                
                 <TextInput
                   className="font-sans text-dark-charcoal text-base md:text-lg min-h-[80px] pt-0 outline-none"
                   placeholder="What's on your mind?"
@@ -151,12 +149,10 @@ export const JournalComposer = () => {
                   style={Platform.OS === 'web' ? { outlineStyle: 'none' } as any : undefined}
                 />
 
-                
                 <View className="flex-row items-center mt-4 gap-2">
                   {(['before', 'during', 'after'] as WatchStage[]).map((s) => (
                     <TouchableOpacity
                       key={s!}
-                      
                       onPress={() => setStage(stage === s ? null : s)}
                       className={`px-3 py-1.5 rounded-full border ${
                         stage === s ? 'border-dark-charcoal bg-dark-charcoal' : 'border-dark-charcoal/20 bg-transparent'
