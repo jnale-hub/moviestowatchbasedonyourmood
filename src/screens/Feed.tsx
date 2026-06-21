@@ -36,7 +36,7 @@ const AnimatedMovieCard = ({
       delay: (index % 4) * 100, 
       useNativeDriver: true,
     }).start();
-  },);
+  });
 
   return (
     <View className="w-[48%] md:w-[23%] mb-6">
@@ -70,11 +70,13 @@ const AnimatedMovieCard = ({
 export const Feed = ({ 
   vibe, 
   onBack, 
-  onMovieSelect 
+  onMovieSelect,
+  onOpenLibrary
 }: { 
   vibe: Vibe; 
   onBack: () => void;
   onMovieSelect: (id: number) => void;
+  onOpenLibrary: () => void;
 }) => {
   const theme = feedThemes[vibe];
   const insets = useSafeAreaInsets(); 
@@ -96,9 +98,18 @@ export const Feed = ({
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         <View className="w-full max-w-6xl mx-auto px-6" style={{ paddingTop: insets.top + 24, paddingBottom: 48 }}>
           
-          <TouchableOpacity onPress={onBack} className="mb-6 self-start">
-            <Text className={`font-sans text-sm lowercase tracking-wider opacity-60 ${theme.textColor}`}>← change vibe</Text>
-          </TouchableOpacity>
+          <View className="flex-row justify-between items-center mb-6">
+            <TouchableOpacity onPress={onBack} className="self-start py-2">
+              <Text className={`font-sans text-sm lowercase tracking-wider opacity-60 ${theme.textColor}`}>← change vibe</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity 
+              onPress={onOpenLibrary}
+              className="w-10 h-10 rounded-full bg-black/10 flex items-center justify-center border border-white/10"
+            >
+              <Text className={`font-serifItalic text-base ${theme.textColor}`}>Y</Text>
+            </TouchableOpacity>
+          </View>
           
           <Text className={`font-serifItalic text-3xl md:text-5xl text-center mb-8 ${theme.textColor}`}>{theme.title}</Text>
 
@@ -125,6 +136,7 @@ export const Feed = ({
         </View>
       </ScrollView>
 
+      {/* Floating Action Button */}
       <TouchableOpacity 
         activeOpacity={0.8}
         onPress={() => openComposer()} 
