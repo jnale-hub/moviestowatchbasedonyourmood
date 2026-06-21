@@ -7,6 +7,7 @@ import { FilmGrain } from '../components/FilmGrain';
 import { Movie, Vibe } from '../types/movie.types';
 import { useJournalStore } from '@/store/useJournalStore';
 import { FeedSkeleton } from '@/components/FeedSkeleton';
+import { Feather } from '@expo/vector-icons';
 
 const feedThemes: Record<Vibe, { bg: string; title: string; textColor: string }> = {
   laugh: { bg: 'bg-soft-cream', title: 'movies to heal your soul', textColor: 'text-dark-charcoal' },
@@ -100,15 +101,22 @@ export const Feed = ({
         <View className="w-full max-w-6xl mx-auto px-6" style={{ paddingTop: insets.top + 24, paddingBottom: 48 }}>
           
           <View className="flex-row justify-between items-center mb-6">
-            <TouchableOpacity onPress={onBack} className="self-start py-2">
-              <Text className={`font-sans text-sm lowercase tracking-wider opacity-60 ${theme.textColor}`}>← change vibe</Text>
+            <TouchableOpacity onPress={onBack} className="flex-row items-center py-2 -ml-2" activeOpacity={0.6}>
+              <Feather
+                name="chevron-left" 
+                size={20} 
+                color={theme.bg === 'bg-soft-cream' || theme.bg === 'bg-[#A49A87]' ? '#1E2326' : '#FDFBF7'} 
+              />
+              <Text className={`font-sans text-sm lowercase tracking-wider opacity-80 ml-1 ${theme.textColor}`}>
+                change vibe
+              </Text>
             </TouchableOpacity>
             
             <TouchableOpacity 
               onPress={onOpenLibrary}
               className="w-10 h-10 rounded-full bg-black/10 flex items-center justify-center border border-white/10"
             >
-              <Text className={`font-serifItalic text-base ${theme.textColor}`}>Y</Text>
+              <Feather name="bookmark" size={18} color={theme.textColor} />
             </TouchableOpacity>
           </View>
           

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ActivityIndicator, Image, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useJournalStore } from '../store/useJournalStore';
+import { Feather } from '@expo/vector-icons';
 
 interface MyLibraryProps {
   onBack: () => void;
@@ -51,12 +52,22 @@ export const MyLibrary = ({ onBack, onMovieSelect }: MyLibraryProps) => {
             entries.map((item, index) => (
               <View key={item.id} className="flex-row mb-8">
                 <View className="items-center mr-4">
-                  <View className="w-10 h-10 rounded-full bg-dark-charcoal flex items-center justify-center z-10"><Text className="text-soft-cream font-serifItalic text-lg">Y</Text></View>
+                  <View className="w-10 h-10 rounded-full bg-dark-charcoal flex items-center justify-center z-10">
+                    <Feather name="user" size={18} color="#FDFBF7" />
+                  </View>
                   {index !== entries.length - 1 && <View className="w-[2px] flex-1 bg-dark-charcoal/10 my-1 rounded-full" />}
                 </View>
                 <View className="flex-1 pb-2">
-                  <TouchableOpacity onPress={() => item.topicType === 'movie' && item.topicId ? onMovieSelect(item.topicId) : null} className="bg-dark-charcoal/5 px-2 py-1 rounded-md self-start mb-2">
-                    <Text className="font-sans font-bold text-dark-charcoal/60 uppercase tracking-widest text-[9px]">{item.topicType === 'cast' ? '👤 ' : '🎬 '}{item.topicName}</Text>
+                  <TouchableOpacity onPress={() => item.topicType === 'movie' && item.topicId ? onMovieSelect(item.topicId) : null} className="bg-dark-charcoal/5 px-2 py-1.5 rounded-md self-start mb-2 flex-row items-center">
+                    <Feather
+                      name={item.topicType === 'cast' ? 'user' : 'film'} 
+                      size={10} 
+                      color="#1E2326" 
+                      style={{ opacity: 0.6, marginRight: 4 }} 
+                    />
+                    <Text className="font-sans font-bold text-dark-charcoal/60 uppercase tracking-widest text-[9px]">
+                      {item.topicName}
+                    </Text>
                   </TouchableOpacity>
                   <Text className="font-sans text-base text-dark-charcoal/90">{item.text}</Text>
                 </View>

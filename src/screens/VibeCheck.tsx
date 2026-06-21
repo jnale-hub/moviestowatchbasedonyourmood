@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FilmGrain } from '../components/FilmGrain';
 import { Vibe } from '../types/movie.types';
 import { useJournalStore } from '@/store/useJournalStore';
+import { Feather } from '@expo/vector-icons';
 
 const VIBES_DATA = [
   { vibeKey: 'laugh' as Vibe, emoji: '😂', color: 'bg-soft-cream', text: 'need a good laugh', textColor: 'text-dark-charcoal', delay: 100 },
@@ -130,7 +131,7 @@ export const VibeCheck = ({ onSelectVibe, onOpenLibrary }: VibeCheckProps) => {
           activeOpacity={0.8}
           className="w-10 h-10 rounded-full bg-dark-charcoal flex items-center justify-center border border-white/10"
         >
-          <Text className="font-serifItalic text-lg text-soft-cream mt-1">Y</Text>
+          <Feather name="bookmark" size={18} color="#FDFBF7" />
         </TouchableOpacity>
       </View>
 
@@ -171,7 +172,7 @@ export const VibeCheck = ({ onSelectVibe, onOpenLibrary }: VibeCheckProps) => {
         style={{ bottom: Math.max(insets.bottom + 20, 32), right: 24 }}
         className="absolute bg-dark-charcoal px-5 py-4 rounded-full shadow-2xl flex-row items-center border border-white/10 z-50"
       >
-        <Text className="text-soft-cream text-lg leading-none">✍🏽</Text>
+        <Feather name="edit-3" size={18} color="#FDFBF7" />
       </TouchableOpacity>
     </View>
   );
