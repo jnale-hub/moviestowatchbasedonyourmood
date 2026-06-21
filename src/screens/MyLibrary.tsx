@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Image, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useJournalStore } from '../store/useJournalStore';
 
@@ -30,10 +30,11 @@ export const MyLibrary = ({ onBack, onMovieSelect }: MyLibraryProps) => {
           <View className="w-10" />
         </View>
 
-        <View className="flex-row bg-dark-charcoal/5 p-1 rounded-full">
+        <View className="flex-row bg-dark-charcoal/5 p-1 rounded-full w-full max-w-[320px] self-center">
           <TouchableOpacity onPress={() => setActiveTab('journal')} className={`flex-1 py-3 rounded-full items-center ${activeTab === 'journal' ? 'bg-dark-charcoal' : ''}`}>
             <Text className={`font-sans text-[10px] tracking-widest uppercase font-bold ${activeTab === 'journal' ? 'text-soft-cream' : 'text-dark-charcoal/40'}`}>journal ({entries.length})</Text>
           </TouchableOpacity>
+          
           <TouchableOpacity onPress={() => setActiveTab('watchlist')} className={`flex-1 py-3 rounded-full items-center ${activeTab === 'watchlist' ? 'bg-dark-charcoal' : ''}`}>
             <Text className={`font-sans text-[10px] tracking-widest uppercase font-bold ${activeTab === 'watchlist' ? 'text-soft-cream' : 'text-dark-charcoal/40'}`}>watchlist ({watchlist.length})</Text>
           </TouchableOpacity>
