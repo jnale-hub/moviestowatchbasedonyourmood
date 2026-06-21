@@ -6,6 +6,7 @@ import { fetchMoviesByVibe } from '../api/tmdb';
 import { FilmGrain } from '../components/FilmGrain';
 import { Movie, Vibe } from '../types/movie.types';
 import { useJournalStore } from '@/store/useJournalStore';
+import { FeedSkeleton } from '@/components/FeedSkeleton';
 
 const feedThemes: Record<Vibe, { bg: string; title: string; textColor: string }> = {
   laugh: { bg: 'bg-soft-cream', title: 'movies to heal your soul', textColor: 'text-dark-charcoal' },
@@ -115,17 +116,21 @@ export const Feed = ({
 
           {isLoading && <ActivityIndicator size="small" color={theme.textColor} />}
           
-          <View className="flex-row flex-wrap justify-between w-full">
-            {data?.results.slice(0, displayLimit).map((movie, index) => (
-              <AnimatedMovieCard 
-                key={movie.id} 
-                movie={movie} 
-                theme={theme} 
-                index={index} 
-                onPress={() => onMovieSelect(movie.id)}
-              />
-            ))}
-          </View>
+          {isLoading ?(
+            <FeedSkeleton theme={theme} />
+          ) : (
+            <View className="flex-row flex-wrap justify-between w-full">
+              {data?.results.slice(0, displayLimit).map((movie, index) => (
+                <AnimatedMovieCard 
+                  key={movie.id} 
+                  movie={movie} 
+                  theme={theme} 
+                  index={index} 
+                  onPress={() => onMovieSelect(movie.id)}
+                />
+              ))}
+            </View>
+          )}
 
           {data && displayLimit < data.results.length && (
             <TouchableOpacity onPress={() => setDisplayLimit(prev => prev + 4)} className="py-8 items-center">
