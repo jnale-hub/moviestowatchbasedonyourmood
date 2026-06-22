@@ -4,6 +4,8 @@ A cross-platform app that curates movie recommendations based on your current em
 
 Live: https://movies-for-your-mood.vercel.app/
 
+![Library Screen](readme/library.png)
+
 ## 🛠️ Tech Stack
 
 * **Framework:** React Native / [Expo](https://expo.dev/)
@@ -82,3 +84,5 @@ This project is continuously evolving. Here is the roadmap for upcoming features
 * **Performance & Asset Optimization:** Continue optimizing the web build.
 
 * **Advanced Journaling:** Add rich text formatting to the journal composer, allowing users to tag specific actors, rate movies on a granular scale, and export their reviews.
+
+![Vibe Check](readme/vibe.png)
