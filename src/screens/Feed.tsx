@@ -12,7 +12,7 @@ import { Header } from '@/components/Header';
 const feedThemes: Record<Vibe, { bg: string; title: string; textColor: string }> = {
   laugh: { bg: 'bg-soft-cream', title: 'movies to heal your soul', textColor: 'text-dark-charcoal' },
   adrenaline: { bg: 'bg-vibe-green', title: 'movies packed with pure adrenaline', textColor: 'text-soft-cream' },
-  think: { bg: 'bg-dark-charcoal', title: 'movies for the slightly pretentious art hoes', textColor: 'text-soft-cream' },
+  think: { bg: 'bg-dark-charcoal', title: 'movies that will make you stare at a wall', textColor: 'text-soft-cream' },
   cry: { bg: 'bg-twilight-maroon', title: 'movies for when you want a good cry', textColor: 'text-soft-cream' },
   scare: { bg: 'bg-[#2A2A2A]', title: 'movies to watch with the lights off', textColor: 'text-soft-cream' },
   chill: { bg: 'bg-[#A49A87]', title: 'movies that feel like a warm blanket', textColor: 'text-dark-charcoal' },
