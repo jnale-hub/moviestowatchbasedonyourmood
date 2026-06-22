@@ -12,7 +12,6 @@ export const JournalComposer = () => {
   
   const { isComposing, composerContext, closeComposer, addEntry } = useJournalStore();
   
-  // States
   const [text, setText] = useState('');
   const [stage, setStage] = useState<WatchStage>(null); 
   const [searchQuery, setSearchQuery] = useState('');
@@ -35,7 +34,6 @@ export const JournalComposer = () => {
 
   const activeContext = composerContext || selectedContext;
 
-  // 🚨 NEW LOGIC: keepOpen determines if the modal stays open for threading
   const handlePost = async (keepOpen = false) => {
     if (text.trim().length === 0) return;
     
@@ -48,7 +46,7 @@ export const JournalComposer = () => {
     });
     
     if (keepOpen) {
-      setText(''); // Clear the text to start the next note in the thread
+      setText(''); 
     } else {
       closeComposer();
     }
@@ -68,15 +66,26 @@ export const JournalComposer = () => {
           >
             {/* Header */}
             <View className="flex-row justify-between items-center p-5 md:p-6 border-b border-dark-charcoal/10">
-              <TouchableOpacity onPress={closeComposer} className="w-16">
+              <TouchableOpacity 
+                onPress={closeComposer} 
+                className="w-16"
+                accessibilityRole="button"
+                accessibilityLabel="Cancel"
+                accessibilityHint="Closes the composer without saving your entry"
+              >
                 <Text className="font-sans text-dark-charcoal/60 font-bold uppercase tracking-widest text-[10px] md:text-xs">Cancel</Text>
               </TouchableOpacity>
-              <Text className="font-serifItalic text-xl text-dark-charcoal lowercase">new entry</Text>
+              <Text 
+                className="font-serifItalic text-xl text-dark-charcoal lowercase"
+                accessibilityRole="header"
+              >
+                new entry
+              </Text>
               <View className="w-16 items-end" />
             </View>
 
             <View className="flex-row p-5 md:p-6">
-              <View className="items-center mr-4">
+              <View className="items-center mr-4" importantForAccessibility="no-hide-descendants">
                 <View className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-dark-charcoal flex items-center justify-center">
                   <Feather name="user" size={18} color="#FDFBF7" />
                 </View>
@@ -89,25 +98,32 @@ export const JournalComposer = () => {
                     <View className="flex-row items-center flex-wrap">
                       <Text className="font-sans font-bold text-dark-charcoal md:text-base mr-2">My Journal</Text>
                       <View className="bg-dark-charcoal/5 px-2 py-1 rounded-md flex-row items-center">
-                        <Text className="font-sans font-bold text-dark-charcoal/60 uppercase tracking-widest text-[9px] md:text-[10px] mr-2">
+                        <Text className="font-sans font-bold text-dark-charcoal/60 uppercase tracking-widest text-[9px] md:text-[10px] mr-2" importantForAccessibility="no-hide-descendants">
                           {activeContext.type === 'cast' ? '👤 ' : '🎬 '}{activeContext.name}
                         </Text>
                         {!composerContext && (
-                          <TouchableOpacity onPress={() => setSelectedContext(null)}>
-                            <Text className="text-dark-charcoal/40 font-bold text-xs">✕</Text>
+                          <TouchableOpacity 
+                            onPress={() => setSelectedContext(null)}
+                            accessibilityRole="button"
+                            accessibilityLabel={`Remove tag for ${activeContext.name}`}
+                            accessibilityHint="Removes this tag from your entry"
+                          >
+                            <Text className="text-dark-charcoal/40 font-bold text-xs" importantForAccessibility="no">✕</Text>
                           </TouchableOpacity>
                         )}
                       </View>
                     </View>
                   ) : (
                     <TextInput
-                      className="font-sans text-dark-charcoal font-bold text-sm bg-dark-charcoal/5 px-3 py-2 rounded-lg outline-none"
+                      className="font-sans text-dark-charcoal font-bold text-sm px-3 py-2 rounded-lg outline-none bg-transparent"
                       placeholder="Tag a movie or actor (optional)..."
                       placeholderTextColor="#1E232660"
                       selectionColor="#1E2326"
                       value={searchQuery}
                       onChangeText={setSearchQuery}
-                      style={Platform.OS === 'web' ? { outlineStyle: 'none' } as any : undefined}
+                      style={Platform.OS === 'web' ? { outlineStyle: 'none', backgroundColor: 'transparent' } as any : { backgroundColor: 'transparent' }}
+                      accessibilityLabel="Tag a movie or actor"
+                      accessibilityHint="Type to search and tag a subject for your journal entry"
                     />
                   )}
 
@@ -129,8 +145,11 @@ export const JournalComposer = () => {
                               });
                               setSearchQuery('');
                             }}
+                            accessibilityRole="button"
+                            accessibilityLabel={`Select ${result.title || result.name}`}
+                            accessibilityHint={`Tags ${result.title || result.name} in your entry`}
                           >
-                            <Text className="font-sans text-dark-charcoal font-medium text-sm">
+                            <Text className="font-sans text-dark-charcoal font-medium text-sm" importantForAccessibility="no-hide-descendants">
                               {result.media_type === 'person' ? '👤 ' : '🎬 '}
                               {result.title || result.name}
                             </Text>
@@ -142,7 +161,7 @@ export const JournalComposer = () => {
                 </View>
 
                 <TextInput
-                  className="font-sans text-dark-charcoal text-base md:text-lg min-h-[80px] pt-0 outline-none"
+                  className="font-sans text-dark-charcoal text-base md:text-lg min-h-[80px] pt-0 outline-none bg-transparent"
                   placeholder="What's on your mind?"
                   placeholderTextColor="#1E232660"
                   selectionColor="#1E2326"
@@ -151,7 +170,9 @@ export const JournalComposer = () => {
                   value={text}
                   onChangeText={setText}
                   textAlignVertical="top"
-                  style={Platform.OS === 'web' ? { outlineStyle: 'none' } as any : undefined}
+                  style={Platform.OS === 'web' ? { outlineStyle: 'none', backgroundColor: 'transparent' } as any : { backgroundColor: 'transparent' }}
+                  accessibilityLabel="Journal entry text"
+                  accessibilityHint="Type your thoughts here"
                 />
 
                 <View className="flex-row items-center mt-4 gap-2">
@@ -162,10 +183,19 @@ export const JournalComposer = () => {
                       className={`px-3 py-1.5 rounded-full border ${
                         stage === s ? 'border-dark-charcoal bg-dark-charcoal' : 'border-dark-charcoal/20 bg-transparent'
                       }`}
+                      accessibilityRole="button"
+                      accessibilityLabel={`Tag as ${s} watching`}
+                      accessibilityState={{ selected: stage === s }}
+                      accessibilityHint={`Marks this entry as written ${s} watching`}
                     >
-                      <Text className={`font-sans text-[10px] uppercase tracking-widest font-bold ${
-                        stage === s ? 'text-soft-cream' : 'text-dark-charcoal/60'
-                      }`}>{s}</Text>
+                      <Text 
+                        className={`font-sans text-[10px] uppercase tracking-widest font-bold ${
+                          stage === s ? 'text-soft-cream' : 'text-dark-charcoal/60'
+                        }`}
+                        importantForAccessibility="no"
+                      >
+                        {s}
+                      </Text>
                     </TouchableOpacity>
                   ))}
                 </View>
@@ -178,9 +208,16 @@ export const JournalComposer = () => {
                 onPress={() => handlePost(true)}
                 className="flex-row items-center py-2"
                 activeOpacity={0.6}
+                accessibilityRole="button"
+                accessibilityLabel="Post and add another"
+                accessibilityState={{ disabled: text.trim().length === 0 }}
+                accessibilityHint="Saves this entry and keeps the composer open to write another one"
               >
-                <Feather name="plus-circle" size={16} color={text.trim().length > 0 ? '#1E2326' : '#1E232660'} />
-                <Text className={`ml-2 font-sans text-[10px] md:text-xs uppercase tracking-widest font-bold ${text.trim().length > 0 ? 'text-dark-charcoal' : 'text-dark-charcoal/40'}`}>
+                <Feather name="plus-circle" size={16} color={text.trim().length > 0 ? '#1E2326' : '#1E232660'} importantForAccessibility="no" />
+                <Text 
+                  className={`ml-2 font-sans text-[10px] md:text-xs uppercase tracking-widest font-bold ${text.trim().length > 0 ? 'text-dark-charcoal' : 'text-dark-charcoal/40'}`}
+                  importantForAccessibility="no"
+                >
                   Post & Add Another
                 </Text>
               </TouchableOpacity>
@@ -190,8 +227,15 @@ export const JournalComposer = () => {
                 onPress={() => handlePost(false)}
                 className={`px-8 py-3 rounded-full ${text.trim().length > 0 ? 'bg-dark-charcoal' : 'bg-dark-charcoal/20'}`}
                 activeOpacity={0.8}
+                accessibilityRole="button"
+                accessibilityLabel="Post"
+                accessibilityState={{ disabled: text.trim().length === 0 }}
+                accessibilityHint="Saves this entry and closes the composer"
               >
-                <Text className={`font-sans text-xs uppercase tracking-widest font-bold ${text.trim().length > 0 ? 'text-soft-cream' : 'text-dark-charcoal/40'}`}>
+                <Text 
+                  className={`font-sans text-xs uppercase tracking-widest font-bold ${text.trim().length > 0 ? 'text-soft-cream' : 'text-dark-charcoal/40'}`}
+                  importantForAccessibility="no"
+                >
                   Post
                 </Text>
               </TouchableOpacity>
