@@ -1,6 +1,6 @@
 # 🎬 Movies For Your Mood
 
-A cross-platform app that curates movie recommendations based on your current emotional vibe. Built with Expo and React Native, the app features a sleek, dark-themed UI, an interactive mood picker, personal library management, and a built-in journal to log your thoughts on what you watch.
+A cross-platform app that curates movie recommendations based on your current emotional vibe. Built with Expo, features an interactive mood picker, personal journal library and management sync on cloud.
 
 Live: https://movies-for-your-mood.vercel.app/
 
@@ -17,9 +17,13 @@ Live: https://movies-for-your-mood.vercel.app/
 ## ✨ Features
 
 * **Vibe Check Engine:** Select from 6 distinct moods (Laugh, Adrenaline, Think, Cry, Scare, Chill) to instantly generate a curated list of movies.
+
 * **Deep Movie & Cast Details:** Powered by the TMDB API, view full movie synopses, ratings, release years, and explore cast members to see their entire filmography.
+
 * **My Library:** Bookmark your favorite movies to your personal library, synced seamlessly via Supabase.
+
 * **Journal Composer:** A quick-access floating action button that lets you jot down reviews, thoughts, and film critiques on the fly.
+
 * **Cross-Platform:** Run as a native app on iOS/Android or as a snappy web application.
 
 ## 🚀 Getting Started
@@ -70,7 +74,11 @@ npx expo start
 This project is continuously evolving. Here is the roadmap for upcoming features and architectural improvements:
 
 * **Global Social Feed:** Expand the app from a personal utility to a community platform. Implement a public feed where users can publish their journal entries, share what they are currently watching.
+
 * **SEO & Deep Linking (Expo Router):** Migrate from the current state-based Single Page App (SPA) routing to Expo Router. This will introduce file-based routing, enabling shareable URLs for specific movies (e.g., `.../movie/123`), dynamic metadata, and vastly improved SEO for the web deployment.
+
 * **Evolved Design System:** Abstract the current Tailwind/NativeWind utility classes into a strict, reusable design system component library.
+
 * **Performance & Asset Optimization:** Continue optimizing the web build.
+
 * **Advanced Journaling:** Add rich text formatting to the journal composer, allowing users to tag specific actors, rate movies on a granular scale, and export their reviews.
