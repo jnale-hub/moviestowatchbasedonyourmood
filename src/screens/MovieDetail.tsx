@@ -12,6 +12,7 @@ import { CastGallery } from '../components/CastGallery';
 import { TrailerModal } from '../components/TrailerModal';
 import { WhereToWatch } from '../components/WhereToWatch';
 import { JournalFeed } from '../components/JournalFeed';
+import { Feather } from '@expo/vector-icons';
 
 interface MovieDetailProps {
   movieId: number;
@@ -39,13 +40,32 @@ export const MovieDetail = ({ movieId, onBack, onActorSelect }: MovieDetailProps
   if (isError) {
     return (
       <View className="flex-1 bg-art-sand justify-center items-center px-6">
-        <Text className="font-serif text-2xl text-dark-charcoal mb-4">Something went wrong.</Text>
+        <Text 
+          className="font-serif text-2xl text-dark-charcoal mb-4"
+          accessibilityRole="header"
+        >
+          Something went wrong.
+        </Text>
         <Text className="font-sans text-sm text-dark-charcoal/60 text-center mb-8">
           We couldn&apos;t fetch the details for this movie. Check your connection or try again.
         </Text>
-        <TouchableOpacity onPress={onBack} className="py-3 px-6 bg-dark-charcoal rounded-full mt-4">
-          <Text className="font-sans text-soft-cream text-xs uppercase tracking-widest">Go Back</Text>
-        </TouchableOpacity>
+        <TouchableOpacity 
+            onPress={onBack}
+            style={{ top: Math.max(insets.top + 10, 20), left: 20 }}
+            className="absolute px-3 py-2 flex-row items-center bg-black/30 rounded-full backdrop-blur-md z-10"
+            activeOpacity={0.8}
+            accessibilityRole="button"
+            accessibilityLabel="Go Back"
+            accessibilityHint="Returns to the previous screen"
+          >
+            <Feather name="chevron-left" size={18} color="#FDFBF7" importantForAccessibility="no" />
+            <Text 
+              className="text-soft-cream text-xs tracking-widest uppercase font-bold ml-1 mt-0.5"
+              importantForAccessibility="no-hide-descendants"
+            >
+              back
+            </Text>
+          </TouchableOpacity>
       </View>
     );
   }
@@ -67,6 +87,8 @@ export const MovieDetail = ({ movieId, onBack, onActorSelect }: MovieDetailProps
             source={{ uri: `https://image.tmdb.org/t/p/original${movie?.backdrop_path}` }}
             className="w-full h-full"
             resizeMode="cover"
+            accessibilityIgnoresInvertColors
+            importantForAccessibility="no" // Background image is purely decorative
           />
           <View pointerEvents="none" className="absolute inset-0">
             <View className="flex-1 bg-gradient-to-t from-art-sand via-art-sand/40 to-transparent" />
@@ -76,8 +98,16 @@ export const MovieDetail = ({ movieId, onBack, onActorSelect }: MovieDetailProps
             onPress={onBack}
             style={{ top: Math.max(insets.top + 10, 20), left: 20 }}
             className="absolute p-3 bg-black/30 rounded-full backdrop-blur-md z-10"
+            accessibilityRole="button"
+            accessibilityLabel="Go Back"
+            accessibilityHint="Returns to the previous screen"
           >
-            <Text className="text-soft-cream text-xs tracking-widest uppercase font-semibold">← back</Text>
+            <Text 
+              className="text-soft-cream text-xs tracking-widest uppercase font-semibold"
+              importantForAccessibility="no-hide-descendants"
+            >
+              ← back
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -89,15 +119,23 @@ export const MovieDetail = ({ movieId, onBack, onActorSelect }: MovieDetailProps
                 <Image 
                   source={{ uri: `https://image.tmdb.org/t/p/w500${movie.poster_path}` }}
                   className="w-full h-full"
+                  accessibilityRole="image"
+                  accessibilityLabel={`Poster for ${movie?.title}`}
                 />
               )}
             </View>
             
             <View className="flex-1 pl-5 md:pl-8 pb-2 md:pb-4 justify-end">
-              <Text className="font-serif text-3xl md:text-5xl lg:text-6xl text-dark-charcoal leading-tight mb-2 md:mb-4">
+              <Text 
+                className="font-serif text-3xl md:text-5xl lg:text-6xl text-dark-charcoal leading-tight mb-2 md:mb-4"
+                accessibilityRole="header"
+              >
                 {movie?.title}
               </Text>
-              <Text className="font-sans text-xs md:text-sm tracking-wider text-dark-charcoal/60 uppercase font-semibold">
+              <Text 
+                className="font-sans text-xs md:text-sm tracking-wider text-dark-charcoal/60 uppercase font-semibold"
+                accessibilityLabel={`Released in ${movie?.release_date?.split('-')[0]}, runtime ${movie?.runtime} minutes, rating ${movie?.vote_average?.toFixed(1)} stars`}
+              >
                 {movie?.release_date?.split('-')[0]} • {movie?.runtime} mins • ★ {movie?.vote_average?.toFixed(1)}
               </Text>
             </View>
@@ -112,8 +150,11 @@ export const MovieDetail = ({ movieId, onBack, onActorSelect }: MovieDetailProps
                     activeOpacity={0.7}
                     onPress={() => setShowTrailer(true)}
                     className="flex-row items-center py-1 opacity-60 hover:opacity-100 transition-opacity"
+                    accessibilityRole="button"
+                    accessibilityLabel="Watch Trailer"
+                    accessibilityHint="Opens a modal to play the movie's trailer"
                   >
-                    <Text className="text-dark-charcoal text-xs mr-1.5 font-medium">▶</Text>
+                    <Text className="text-dark-charcoal text-xs mr-1.5 font-medium" importantForAccessibility="no">▶</Text>
                     <Text className="font-sans font-bold text-dark-charcoal tracking-widest text-[11px] uppercase">
                       watch trailer
                     </Text>
@@ -131,8 +172,12 @@ export const MovieDetail = ({ movieId, onBack, onActorSelect }: MovieDetailProps
                     }
                   }}
                   className="flex-row items-center py-1 opacity-60 hover:opacity-100 transition-opacity"
+                  accessibilityRole="button"
+                  accessibilityLabel={isSaved ? 'Saved to library' : 'Add to watchlist'}
+                  accessibilityHint={isSaved ? 'Removes the movie from your watchlist' : 'Adds the movie to your watchlist'}
+                  accessibilityState={{ selected: isSaved }}
                 >
-                  <Text className="text-dark-charcoal text-sm mr-1.5 font-medium mb-0.5">
+                  <Text className="text-dark-charcoal text-sm mr-1.5 font-medium mb-0.5" importantForAccessibility="no">
                     {isSaved ? '★' : '☆'}
                   </Text>
                   <Text className="font-sans font-bold text-dark-charcoal tracking-widest text-[11px] uppercase">
@@ -142,7 +187,12 @@ export const MovieDetail = ({ movieId, onBack, onActorSelect }: MovieDetailProps
               </View>
 
               <View className="mb-12">
-                <Text className="font-serifItalic text-xl md:text-2xl text-dark-charcoal/50 mb-4 lowercase">the story</Text>
+                <Text 
+                  className="font-serifItalic text-xl md:text-2xl text-dark-charcoal/50 mb-4 lowercase"
+                  accessibilityRole="header"
+                >
+                  the story
+                </Text>
                 <Text className="font-sans text-base md:text-lg leading-relaxed text-dark-charcoal/80">
                   {movie?.overview}
                 </Text>
@@ -167,8 +217,11 @@ export const MovieDetail = ({ movieId, onBack, onActorSelect }: MovieDetailProps
         onPress={() => openComposer({ id: movieId, type: 'movie', name: movie?.title || 'Unknown' })}
         style={{ bottom: Math.max(insets.bottom + 20, 32), right: 24 }}
         className="absolute bg-dark-charcoal px-5 py-4 rounded-full shadow-2xl flex-row items-center border border-white/10 z-50"
+        accessibilityRole="button"
+        accessibilityLabel="Log thought"
+        accessibilityHint={`Opens the journal composer to write a note about ${movie?.title || 'this movie'}`}
       >
-        <Text className="text-soft-cream text-lg mr-2 leading-none">✍🏽</Text>
+        <Text className="text-soft-cream text-lg mr-2 leading-none" importantForAccessibility="no">✍🏽</Text>
         <Text className="font-sans text-soft-cream font-bold text-[11px] tracking-widest uppercase mt-0.5">log thought</Text>
       </TouchableOpacity>
 

@@ -1,13 +1,13 @@
+import { useJournalStore } from '@/store/useJournalStore';
 import { EBGaramond_400Regular, EBGaramond_400Regular_Italic, useFonts as useSerifFonts } from '@expo-google-fonts/eb-garamond';
 import { Inter_400Regular, useFonts as useInterFonts } from '@expo-google-fonts/inter';
+import { Feather } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { useEffect, useRef } from 'react';
 import { Animated, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FilmGrain } from '../components/FilmGrain';
 import { Vibe } from '../types/movie.types';
-import { useJournalStore } from '@/store/useJournalStore';
-import { Feather } from '@expo/vector-icons';
 
 const VIBES_DATA = [
   { vibeKey: 'laugh' as Vibe, emoji: '😂', color: 'bg-soft-cream', text: 'need a good laugh', textColor: 'text-dark-charcoal', delay: 100 },
@@ -81,8 +81,11 @@ const MoodTile = ({
           onPressOut={handlePressOut}
           onPress={() => onPress(vibeKey)} 
           className={`flex-1 p-4 rounded-3xl shadow-sm ${color} justify-center items-center border border-black/5`}
+          accessibilityRole="button"
+          accessibilityLabel={`${text} vibe`}
+          accessibilityHint="Finds movies matching this mood"
         >
-          <Text className="text-4xl md:text-5xl mb-3">{emoji}</Text>
+          <Text className="text-4xl md:text-5xl mb-3" importantForAccessibility="no-hide-descendants">{emoji}</Text>
           <Text className={`font-sans text-center text-lg md:text-xl leading-tight tracking-tight lowercase ${textColor}`}>
             {text}
           </Text>
@@ -121,15 +124,24 @@ export const VibeCheck = ({ onSelectVibe, onOpenLibrary }: VibeCheckProps) => {
     <View className="flex-1 bg-art-sand overflow-hidden">
       <FilmGrain />
       
+      {/* HEADER */}
       <View 
         className="px-6 flex-row justify-between items-center z-10 absolute top-0 left-0 right-0"
         style={{ paddingTop: Math.max(insets.top, 20) + 8 }}
       >
-        <Text className="font-serifItalic text-2xl text-dark-charcoal lowercase">vibe check</Text>
+        <Text 
+          className="font-serifItalic text-2xl text-dark-charcoal lowercase"
+          accessibilityRole="header"
+        >
+          vibe check
+        </Text>
         <TouchableOpacity 
           onPress={onOpenLibrary}
           activeOpacity={0.8}
           className="w-10 h-10 rounded-full bg-dark-charcoal flex items-center justify-center border border-white/10"
+          accessibilityRole="button"
+          accessibilityLabel="My Library"
+          accessibilityHint="Opens your journal and watchlist"
         >
           <Feather name="bookmark" size={18} color="#FDFBF7" />
         </TouchableOpacity>
@@ -144,7 +156,10 @@ export const VibeCheck = ({ onSelectVibe, onOpenLibrary }: VibeCheckProps) => {
       >
         <View className="w-full max-w-3xl mx-auto px-6 relative">
           <Animated.View style={{ opacity: titleOpacity }}>
-            <Text className="font-serifItalic text-dark-charcoal text-4xl md:text-5xl text-center lowercase tracking-tighter mb-10 md:mb-16">
+            <Text 
+              className="font-serifItalic text-dark-charcoal text-4xl md:text-5xl text-center lowercase tracking-tighter mb-10 md:mb-16"
+              accessibilityRole="header"
+            >
               what&apos;s the vibe today?
             </Text>
           </Animated.View>
@@ -166,11 +181,15 @@ export const VibeCheck = ({ onSelectVibe, onOpenLibrary }: VibeCheckProps) => {
         </View>
       </ScrollView>
 
+      {/* FLOATING ACTION BUTTON */}
       <TouchableOpacity 
         activeOpacity={0.8}
         onPress={() => openComposer()} 
         style={{ bottom: Math.max(insets.bottom + 20, 32), right: 24 }}
         className="absolute bg-dark-charcoal px-5 py-4 rounded-full shadow-2xl flex-row items-center border border-white/10 z-50"
+        accessibilityRole="button"
+        accessibilityLabel="Log a thought"
+        accessibilityHint="Opens the composer to write a new journal entry"
       >
         <Feather name="edit-3" size={18} color="#FDFBF7" />
       </TouchableOpacity>
